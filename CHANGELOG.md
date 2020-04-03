@@ -1,4 +1,4 @@
-0.1.0
+1.0.0
 
  - K3os 0.9.1
  - Increase boot wait to 20 seconds
