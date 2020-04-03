@@ -1,0 +1,6 @@
+boot_cmd:
+  # If the vagrant SSH key has not been inserted then allow password authentication
+  # After insertion this is then disabled to only allow public key authentication
+  - if ! grep -q "vagrant$" /home/rancher/.ssh/authorized_keys; then sudo sed -i 's|PasswordAuthentication  no|PasswordAuthentication  yes|' /etc/ssh/sshd_config && sudo service sshd restart; fi
+k3os:
+  password: rancher
