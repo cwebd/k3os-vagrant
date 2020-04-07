@@ -4,26 +4,21 @@ Modified from https://github.com/rancher/k3os/blob/master/LICENSE
 
 ## Quick Start
 
-1. 
+1. Clean up before building
+   
+   `$>./cleanup.sh`
 
-Clean up before building
-./cleanup.sh
+   Build vagrant box image using [Packer](https://www.packer.io/): 
 
-Build vagrant box image using [Packer](https://www.packer.io/): 
-
-```
-packer build --on-error=abort vagrant.json
-```
+   `$>packer build --on-error=abort vagrant.json`
 
 2. Run the Vagrant box:
+   
+   `$>vagrant up`
 
-```
-vagrant up
-```
-
-You can then login to the box using `vagrant ssh`. See [Vagrant
-Docs](https://www.vagrantup.com/docs/index.html) for more details on how
-to use Vagrant
+   You can then login to the box using `vagrant ssh`. See [Vagrant
+   Docs](https://www.vagrantup.com/docs/index.html) for more details on how
+   to use Vagrant
 
 ## Notes
 
