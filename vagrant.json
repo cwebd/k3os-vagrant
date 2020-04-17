@@ -1,8 +1,8 @@
 {
     "variables": {
         "password": "rancher",
-        "version": "0.9.1-wireguard",
-        "checksum": "13d297e8d430929f573fb1f8b4173982c62e8fecd11abcb442257ae8e8746eb0"
+        "version": "v0.9.1-wireguard",
+        "checksum": "87767745c0a73de7e237e5177fc62aae2e3a785db31397120c6bc26f14c35aae"
     },
     "builders": [
         {
