@@ -10,7 +10,7 @@ Modified from https://github.com/rancher/k3os/blob/master/LICENSE
 
    Build vagrant box image using [Packer](https://www.packer.io/): 
 
-   `$>packer build --on-error=abort vagrant.json`
+   `$>./build.sh`
 
 2. Run the Vagrant box:
    

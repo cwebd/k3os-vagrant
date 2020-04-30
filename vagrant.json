@@ -1,8 +1,9 @@
 {
     "variables": {
         "password": "rancher",
-        "version": "v0.9.1-wireguard",
-        "checksum": "87767745c0a73de7e237e5177fc62aae2e3a785db31397120c6bc26f14c35aae"
+        "version": "v0.10.0-12-gb0710ed-amd64",
+        "checksum": "fc7276330ee704f995d03f82624491283b0c8b0a5b37b6101d8a3b82dee41025",
+        "iso_url": "https://github.com/cwebd/k3os/releases/download/{{user `version`}}/k3os-amd64.iso"
     },
     "builders": [
         {
@@ -26,7 +27,7 @@
             ],
             "guest_os_type": "Linux_64",
             "http_directory": ".",
-            "iso_url": "https://github.com/cwebd/k3os/releases/download/{{user `version`}}/k3os-amd64.iso",
+            "iso_url": "{{ user `iso_url` }}",
             "iso_checksum": "{{user `checksum`}}",
             "iso_checksum_type": "sha256",
             "ssh_username": "rancher",
