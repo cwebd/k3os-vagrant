@@ -1,55 +1,48 @@
 # k3OS on Vagrant
 
-Modified from https://github.com/rancher/k3os/blob/master/LICENSE
+Multi node cluster setup allowing for configuration via nugrant in vagrant.
 
 ## Quick Start
 
-1. Clean up before building
-   
-   `$>./cleanup.sh`
+`$>vagrant up`
 
-   Build vagrant box image using [Packer](https://www.packer.io/): 
+This will create a single k3os instance running k3s in master mode. To connect:
 
-   `$>./build.sh`
+`$>vagrant ssh`
 
-2. Run the Vagrant box:
-   
-   `$>vagrant up`
+Retrieve the configuration from /etc/rancher/.... [TODO]
 
-   You can then login to the box using `vagrant ssh`. See [Vagrant
-   Docs](https://www.vagrantup.com/docs/index.html) for more details on how
-   to use Vagrant
+`$>ifconfig | grep eth0`
+
+Get the ip address of the instance.
+
+Update your local .kube/config with the contents of the k3s configuration file with the updated ip address.
+
+On your local system:
+
+`$>kubectl get nodes`
+
+Should then deliver one k3os master server available.
+
+## Multi Instance setup
+
+TODO
+
+## Building Packer boxes
+
+`$>cd packer`
+`$>./cleanup.sh`
+`$>./build.sh`
+
+This will produce a libvrt and virtualbox .box to upload to vagrant cloud
 
 ## Notes
 
-The generated box does not have the Virtualbox Guest Additions
-installed. Most of the configuration options will not work. this is
-specially true for:
+The Virtualbox guest additions are not installed
 
-* `config.vm.hostname`
-* `config.vm.synced_folder`
-* `config.vm.network`
+## References
 
-The shell provisioner is working but requires some tweaking. The
-provisioning shell script will be put into `/tmp/vagrant-shell`. The
-file can be written but can not be executed. To mitigate this
-limitation, one have to set the `upload_path` option.
-
-```
-config.vm.provision 'shell',
-  upload_path: '/home/rancher/vagrant-shell',
-  inline: <<-SHELL
-mkdir -p /mnt
-mount /dev/sda1 /mnt
-cat <<EOF > /mnt/k3os/system/config.yaml
-k3os:
-  token: EbvX0V38syjPQBZJ71tb9EIHbyL5mISBqDSTa2aJt7LSCF1JEW
-  password: rancher
-EOF
-reboot
-SHELL
-```
-
-The above example also shows how the k3OS config can be changed. When
-you do so, you have to set the password to `rancher`. If this is not the
-case, vagrant will not be able to login.
+ - K3os https://github.com/rancher/k3os
+ - Vagrant https://www.vagrantup.com/
+ - Vagrant Cloud https://app.vagrantup.com/
+ - Modified from https://github.com/rancher/k3os/blob/master/LICENSE

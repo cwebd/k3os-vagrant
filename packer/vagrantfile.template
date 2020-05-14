@@ -1,0 +1,52 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.require_version ">= 2.2.7"
+
+# Define configure_networks which is used by the vagran configuration
+# the Linux guest does not have this capability and an error will be delivered
+module VagrantPlugins
+  module GuestLinux
+    class Plugin < Vagrant.plugin("2")
+      guest_capability("linux", "configure_networks") do
+        Cap::ConfigureNetworks
+      end
+    end
+  end
+end
+
+module VagrantPlugins
+    module GuestLinux
+        module Cap
+            class ConfigureNetworks
+                def self.configure_networks(machine, networks)
+                end
+            end
+        end
+    end
+end
+
+Vagrant.configure("2") do |config|
+
+  config.vagrant.plugins = "nugrant"
+
+  # Disable default file syncing
+  config.vm.synced_folder '.', '/vagrant', disabled: true
+  config.vm.box_check_update = true
+  config.vm.guest = :linux
+  config.ssh.username = "rancher"
+
+  config.vm.provider :libvirt do |libvrt|
+    libvrt.management_network_mode = "route"
+    libvrt.driver = "kvm"
+    libvrt.memory = 1024
+  end
+
+  config.vm.provider :virtualbox do |vb|
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
+    vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    vb.customize ["modifyvm", :id, "--acpi", "off"]
+    vb.customize ["modifyvm", :id, "--memory", 1024]
+  end
+
+end
