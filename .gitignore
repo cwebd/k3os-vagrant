@@ -1,3 +1,4 @@
 k3os_virtualbox.box
-packer_cache
+packer/packer_cache
+packer/build
 .vagrant
