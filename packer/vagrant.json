@@ -9,10 +9,10 @@
             "type": "qemu",
             "accelerator": "kvm",
             "display": "none",
-            "boot_wait": "6s",
+            "boot_wait": "30s",
             "boot_command": [
                 "<enter>",
-                "<wait20>",
+                "<wait40>",
                 "rancher",
                 "<enter>",
                 "sudo k3os install",
@@ -44,10 +44,10 @@
         },
         {
             "type": "virtualbox-iso",
-            "boot_wait": "6s",
+            "boot_wait": "30s",
             "boot_command": [
                 "<enter>",
-                "<wait20>",
+                "<wait40>",
                 "rancher",
                 "<enter>",
                 "sudo k3os install",
