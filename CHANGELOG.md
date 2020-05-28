@@ -1,3 +1,4 @@
+1.0.4
 - Add multi server configuration using .vagrantuser
 - K3os configuration provisioning
 
