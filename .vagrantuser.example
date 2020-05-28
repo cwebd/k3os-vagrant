@@ -1,0 +1,212 @@
+# Define k3os cluster configuration
+
+bridge_interface: em1
+provider: libvrt
+#provision_debug: true
+
+# Single Server
+servers:
+  'server1':
+    macaddress2: '7e522693e957'
+    k3os_config: 'config.yaml'
+    k3os_config_env:
+      hostname:  "k3s-server-01.cluster.k3s"
+      k3os_password: "rancher"
+      k3os_token: "a6715b0fa4dca52833f2791e8ab1476f25ca0e137cd52ca13d40f33c4896a174"
+      k3os_server_url: ""
+      k3os_args_node_ip: 192.168.1.115
+      k3os_args_external_ip: 192.168.1.115
+      k3os_args_flannel_iface: eth1
+      k3os_args_k3s_args:
+        - server
+        - "--cluster-init"
+        - "--node-ip=$k3os_args_node_ip"
+        - "--node-external-ip=$k3os_args_node_ip"
+        - "--flannel-iface=$k3os_args_flannel_iface"
+        - "--flannel-backend=wireguard"
+        - "--disable-agent=false"
+    cpus:  4
+    memory:  1024
+
+# Three Servers
+
+# servers:
+#   'server1':
+#     macaddress2: '7e522693e957'
+#     k3os_config: 'config.yaml'
+#     k3os_config_env:
+#       hostname:  "k3s-server-01.cluster.k3s"
+#       k3os_password: "rancher"
+#       k3os_token: "a6715b0fa4dca52833f2791e8ab1476f25ca0e137cd52ca13d40f33c4896a174"
+#       k3os_server_url: ""
+#       k3os_args_node_ip: 192.168.1.115
+#       k3os_args_external_ip: 192.168.1.115
+#       k3os_args_flannel_iface: eth1
+#       k3os_args_k3s_args:
+#         - server
+#         - "--cluster-init"
+#         - "--node-ip=$k3os_args_node_ip"
+#         - "--node-external-ip=$k3os_args_node_ip"
+#         - "--flannel-iface=$k3os_args_flannel_iface"
+#         - "--flannel-backend=wireguard"
+#         - "--disable-agent=false"
+#     cpus:  4
+#     memory:  1024
+#   'server2':
+#     macaddress2: '224863aa8bde'
+#     k3os_config: 'config.yaml'
+#     k3os_config_env:
+#       hostname:  "k3s-server-02.cluster.k3s"
+#       k3os_password: "rancher"
+#       k3os_token: "a6715b0fa4dca52833f2791e8ab1476f25ca0e137cd52ca13d40f33c4896a174"
+#       k3os_server_url: "https://192.168.1.115:6443"
+#       k3os_args_node_ip: 192.168.1.116
+#       k3os_args_external_ip: 192.168.1.116
+#       k3os_args_flannel_iface: eth1
+#       k3os_args_k3s_args:
+#         - server
+#         - "--node-ip=$k3os_args_node_ip"
+#         - "--node-external-ip=$k3os_args_node_ip"
+#         - "--flannel-iface=$k3os_args_flannel_iface"
+#         - "--flannel-backend=wireguard"
+#         - "--disable-agent=false"
+#     cpus:  4
+#     memory:  1024
+#   'server3':
+#     macaddress2: '6eb0b992eb1b'
+#     k3os_config: 'config.yaml'
+#     k3os_config_env:
+#       hostname:  "k3s-server-03.cluster.k3s"
+#       k3os_password: "rancher"
+#       k3os_token: "a6715b0fa4dca52833f2791e8ab1476f25ca0e137cd52ca13d40f33c4896a174"
+#       k3os_server_url: "https://192.168.1.115:6443"
+#       k3os_args_node_ip: 192.168.1.117
+#       k3os_args_external_ip: 192.168.1.117
+#       k3os_args_flannel_iface: eth1
+#       k3os_args_k3s_args:
+#         - server
+#         - "--node-ip=$k3os_args_node_ip"
+#         - "--node-external-ip=$k3os_args_node_ip"
+#         - "--flannel-iface=$k3os_args_flannel_iface"
+#         - "--flannel-backend=wireguard"
+#         - "--disable-agent=false"
+#     cpus:  4
+#     memory:  1024
+
+# Three Servers, three agents
+# servers:
+#   'server1':
+#     macaddress2: '7e522693e957'
+#     k3os_config: 'config.yaml'
+#     k3os_config_env:
+#       hostname:  "k3s-server-01.cluster.k3s"
+#       k3os_password: "rancher"
+#       k3os_token: "a6715b0fa4dca52833f2791e8ab1476f25ca0e137cd52ca13d40f33c4896a174"
+#       k3os_server_url: ""
+#       k3os_args_node_ip: 192.168.1.115
+#       k3os_args_external_ip: 192.168.1.115
+#       k3os_args_flannel_iface: eth1
+#       k3os_args_k3s_args:
+#         - server
+#         - "--cluster-init"
+#         - "--node-ip=$k3os_args_node_ip"
+#         - "--node-external-ip=$k3os_args_node_ip"
+#         - "--flannel-iface=$k3os_args_flannel_iface"
+#         - "--flannel-backend=wireguard"
+#         - "--disable-agent=false"
+#     cpus:  4
+#     memory:  1024
+#   'server2':
+#     macaddress2: '224863aa8bde'
+#     k3os_config: 'config.yaml'
+#     k3os_config_env:
+#       hostname:  "k3s-server-02.cluster.k3s"
+#       k3os_password: "rancher"
+#       k3os_token: "a6715b0fa4dca52833f2791e8ab1476f25ca0e137cd52ca13d40f33c4896a174"
+#       k3os_server_url: "https://192.168.1.115:6443"
+#       k3os_args_node_ip: 192.168.1.116
+#       k3os_args_external_ip: 192.168.1.116
+#       k3os_args_flannel_iface: eth1
+#       k3os_args_k3s_args:
+#         - server
+#         - "--node-ip=$k3os_args_node_ip"
+#         - "--node-external-ip=$k3os_args_node_ip"
+#         - "--flannel-iface=$k3os_args_flannel_iface"
+#         - "--flannel-backend=wireguard"
+#         - "--disable-agent=false"
+#     cpus:  4
+#     memory:  1024
+#   'server3':
+#     macaddress2: '6eb0b992eb1b'
+#     k3os_config: 'config.yaml'
+#     k3os_config_env:
+#       hostname:  "k3s-server-03.cluster.k3s"
+#       k3os_password: "rancher"
+#       k3os_token: "a6715b0fa4dca52833f2791e8ab1476f25ca0e137cd52ca13d40f33c4896a174"
+#       k3os_server_url: "https://192.168.1.115:6443"
+#       k3os_args_node_ip: 192.168.1.117
+#       k3os_args_external_ip: 192.168.1.117
+#       k3os_args_flannel_iface: eth1
+#       k3os_args_k3s_args:
+#         - server
+#         - "--node-ip=$k3os_args_node_ip"
+#         - "--node-external-ip=$k3os_args_node_ip"
+#         - "--flannel-iface=$k3os_args_flannel_iface"
+#         - "--flannel-backend=wireguard"
+#         - "--disable-agent=false"
+#     cpus:  4
+#     memory:  1024
+#   'agent1':
+#     macaddress2: 'e248e1d0b174'
+#     k3os_config: 'config.yaml'
+#     k3os_config_env:
+#       hostname:  "k3s-agent-01.cluster.k3s"
+#       k3os_password: "rancher"
+#       k3os_token: "a6715b0fa4dca52833f2791e8ab1476f25ca0e137cd52ca13d40f33c4896a174"
+#       k3os_server_url: "https://192.168.1.115:6443"
+#       k3os_args_node_ip: 192.168.1.118
+#       k3os_args_external_ip: 192.168.1.118
+#       k3os_args_flannel_iface: eth1
+#       k3os_args_k3s_args:
+#         - agent
+#         - "--node-ip=$k3os_args_node_ip"
+#         - "--node-external-ip=$k3os_args_node_ip"
+#         - "--flannel-iface=$k3os_args_flannel_iface"
+#     cpus:  4
+#     memory:  1024
+#   'agent2':
+#     macaddress2: '4260f68f236e'
+#     k3os_config: 'config.yaml'
+#     k3os_config_env:
+#       hostname:  "k3s-agent-02.cluster.k3s"
+#       k3os_password: "rancher"
+#       k3os_token: "a6715b0fa4dca52833f2791e8ab1476f25ca0e137cd52ca13d40f33c4896a174"
+#       k3os_server_url: "https://192.168.1.115:6443"
+#       k3os_args_node_ip: 192.168.1.119
+#       k3os_args_external_ip: 192.168.1.119
+#       k3os_args_flannel_iface: eth1
+#       k3os_args_k3s_args:
+#         - agent
+#         - "--node-ip=$k3os_args_node_ip"
+#         - "--node-external-ip=$k3os_args_node_ip"
+#         - "--flannel-iface=$k3os_args_flannel_iface"
+#     cpus:  4
+#     memory:  1024
+#   'agent3':
+#     macaddress2: 'fed085a6919c'
+#     k3os_config: 'config.yaml'
+#     k3os_config_env:
+#       hostname:  "k3s-agent-03.cluster.k3s"
+#       k3os_password: "rancher"
+#       k3os_token: "a6715b0fa4dca52833f2791e8ab1476f25ca0e137cd52ca13d40f33c4896a174"
+#       k3os_server_url: "https://192.168.1.115:6443"
+#       k3os_args_node_ip: 192.168.1.120
+#       k3os_args_external_ip: 192.168.1.120
+#       k3os_args_flannel_iface: eth1
+#       k3os_args_k3s_args:
+#         - agent
+#         - "--node-ip=$k3os_args_node_ip"
+#         - "--node-external-ip=$k3os_args_node_ip"
+#         - "--flannel-iface=$k3os_args_flannel_iface"
+#     cpus:  4
+#     memory:  1024

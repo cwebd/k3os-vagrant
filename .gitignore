@@ -1,4 +1,5 @@
-k3os_virtualbox.box
+.vagrant
+.vagrantuser
+config.yaml
 packer/packer_cache
 packer/build
-.vagrant

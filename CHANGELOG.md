@@ -1,3 +1,6 @@
+- Add multi server configuration using .vagrantuser
+- K3os configuration provisioning
+
 1.0.1
  - Update README
  - k3os v0.10.1-rc1-1-g4e7da23-amd64
