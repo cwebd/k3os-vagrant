@@ -78,3 +78,7 @@ If provision_debug is set to true in the .vagrantuser then the provision scripts
  - Vagrant https://www.vagrantup.com/
  - Vagrant Cloud https://app.vagrantup.com/
  - Modified from https://github.com/rancher/k3os/blob/master/LICENSE
+ 
+## Similar project
+
+https://github.com/wjimenez5271/k3os-vagrant
