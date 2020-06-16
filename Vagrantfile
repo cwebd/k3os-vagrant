@@ -111,6 +111,9 @@ Vagrant.configure("2") do |config|
 
       if server_config.k3os_config != ""
 
+        # Download and install the envsubst binary if not present
+        cfg.vm.provision "envsubst", type: "shell", inline: "if [ ! -f  \"/usr/local/bin/envsubst\" ]; then curl -L https://github.com/a8m/envsubst/releases/download/v1.1.0/envsubst-`uname -s`-`uname -m` -o envsubst; chmod +x envsubst; sudo mv envsubst /usr/local/bin; fi",  upload_path: "/home/rancher/provision-envsubst.sh"
+
         cfg.vm.provision "k3os-config-template", type: "file", source: server_config.k3os_config, destination: "/home/rancher/provision-k3os-config-template.yaml"
 
         # If the k3os_config is not empty then write out the environment variables
