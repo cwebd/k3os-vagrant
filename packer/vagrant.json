@@ -1,8 +1,8 @@
 {
     "variables": {
-        "version": "v0.10.1-rc1-1-g4e7da23-amd64",
-        "checksum": "2be67b8f5e7ed430a834355a3aa4f7435dbc4ad83136c419f7843dfe24183b3c",
-        "iso_url": "https://github.com/cwebd/k3os/releases/download/{{user `version`}}/k3os-amd64.iso"
+        "version": "v0.10.2",
+        "checksum": "e4263102018f855babc0cf0fed855f6b9d5b1a1f1dfc287922215f1e99e8a846",
+        "iso_url": "https://github.com/rancher/k3os/releases/download/v0.10.2/k3os-amd64.iso"
     },
     "builders": [
         {
