@@ -1,6 +1,6 @@
 # Define k3os cluster configuration
 
-bridge_interface: em1
+bridge_interface: eth0
 provider: libvrt
 #provision_debug: true
 
