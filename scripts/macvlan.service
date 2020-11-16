@@ -1,0 +1,17 @@
+### BEGIN INIT INFO
+# Provides:          macvlan
+# Required-Start:    $all
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:
+# Short-Description: Start macvlan script to add a new interface called macvlan0 which bridges to the main interface to allowfor libvrt guests to connect to the host
+### END INIT INFO
+
+[Unit]
+Description=Start MacVlan Bridge
+
+[Service]
+ExecStart=/etc/init.d/macvlan
+
+[Install]
+WantedBy=multi-user.target

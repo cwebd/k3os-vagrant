@@ -1,0 +1,98 @@
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:          macvlan
+# Required-Start:    mountkernfs $local_fs urandom
+# Required-Stop:     $local_fs
+# Default-Start:     S
+# Default-Stop:      0 6
+# Short-Description: Add macvlan0 interface
+# Description:       Add macvlan0 interface which will bridge to the local interface to allow for libvrt hosts to communicate with the host
+### END INIT INFO
+
+set -o xtrace
+
+# This script ads a new interface called macvlan0 which bridges to the HWLink
+# This allows for libvrt guests to ping to and from the host
+#
+
+# If ENABLED is not true then default to the normal em1 settings and remove
+# the macvlan0 interface, set to false to disable
+ENABLED=true
+
+# let host and guests talk to each other over macvlan
+# configures a macvlan interface on the hypervisor
+# run this on the hypervisor (e.g. in /etc/rc.local)
+# made for IPv4; need modification for IPv6
+# meant for a simple network setup with only eth0,
+# and a static (manual) ip config
+# Evert Mouw, 2013
+
+HWLINK=eth0
+MACVLN=macvlan0
+TESTHOST=www.google.com
+
+# Ensure macvlan module is loaded
+modprobe macvlan
+
+# ------------
+# wait for network availability
+# ------------
+
+function networkConnectivity {
+  while ! ping -q -c 1 $TESTHOST > /dev/null
+    do
+      echo "$0: Cannot ping $TESTHOST, waiting another 5 secs..."
+      sleep 5
+    done
+}
+
+networkConnectivity
+
+# ------------
+# get network config
+# ------------
+
+IP=$(ip address show dev $HWLINK | grep "inet " | awk '{print $2}' | head -1)
+NETWORK=$(ip -o route | grep $HWLINK | grep -v default | awk '{print $1}' | head -1)
+GATEWAY=$(ip -o route | grep default | awk '{print $3}' | head -1)
+
+# Reset the network to the default state
+ip link delete $MACVLN
+ifconfig $HWLINK down
+ifconfig $HWLINK up
+route add default gw "$GATEWAY" "$HWLINK"
+
+networkConnectivity
+
+if [ $ENABLED != true ]; then
+  echo "Set to route through $HWLINK"
+  exit
+fi
+
+
+# ------------
+# setting up $MACVLN interface
+# ------------
+
+ip link add link $HWLINK $MACVLN type macvlan mode bridge
+ip address add "$IP" dev $MACVLN
+ip link set dev $MACVLN up
+
+# Wait for network connectivity to return
+networkConnectivity
+
+# ------------
+# routing table
+# ------------
+
+# empty routes
+ip route flush dev $HWLINK
+ip route flush dev $MACVLN
+
+# add routes
+ip route add "$NETWORK" dev $MACVLN metric 0
+
+# add the default gateway
+route add default gw "$GATEWAY" $MACVLN
+
+echo "Set to route through $MACVLN"

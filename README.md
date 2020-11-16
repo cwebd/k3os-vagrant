@@ -4,6 +4,20 @@ Vagrant setup allowing for single and multi server and agent configuration. Full
 
 The default configuration uses wireguard ensuring all node communication is encrypted.
 
+## Prerequisites
+
+    - Vagrant
+    - libvrt plugin
+    CONFIGURE_ARGS="with-libvirt-include=/usr/include/libvirt with-libvirt-lib=/usr/lib" vagrant plugin install vagrant-libvirt
+    - Setup Bridge Networking (Example for Ubuntu 20.04LTS)
+    This will allow the host and guest to be able to communicate
+    cp scripts/macvlan /etc/init.d/macvlan
+    chmod u+x /etc/init.d/macvlan
+    Edit /etc/init.d/macvlan if your eth0 interface is not the default, update HWLINK
+    cp scripts/macvlan.service to /etc/systemd/system/macvlan.service
+    systemctl enable macvlan.service
+    systemctl start macvlan.service
+
 ## Quick Start
 
 `$>cp .vagrantuser.example .vagrantuser`
@@ -78,7 +92,7 @@ If provision_debug is set to true in the .vagrantuser then the provision scripts
  - Vagrant https://www.vagrantup.com/
  - Vagrant Cloud https://app.vagrantup.com/
  - Modified from https://github.com/rancher/k3os/blob/master/LICENSE
- 
+
 ## Similar project
 
 https://github.com/wjimenez5271/k3os-vagrant
