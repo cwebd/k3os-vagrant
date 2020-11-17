@@ -61,6 +61,8 @@ When creating a multi server architecture use the server name to connect:
 
 When using libvrt the virtual machine machine can be used to access and review the boxes.
 
+When adding multiple servers to avoid a race condition bring up server1 first and ensure that this is online, then add additional servers individually into the cluster until at the desired amount.
+
 ## Updating k3os configuration information
 
 When the .vagrantuser k3os configuration is updated, run:
@@ -70,6 +72,8 @@ When the .vagrantuser k3os configuration is updated, run:
 This will then deploy the new configuration, the provision scripts compare if the k3os config yaml matches the system k3os config yaml, if there are differences this file is copied across and the box is restarted so that the changes take effect.
 
 ## Building Packer boxes
+
+As packer will build both kvm and virtualbox images ensure that libvrt boxes are shut down and not running as Virtualbox and KVM will not work concurrently.
 
 `$>cd packer`
 `$>./cleanup.sh`
