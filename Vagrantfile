@@ -140,8 +140,11 @@ Vagrant.configure("2") do |config|
           provision_remove = "echo \"Debug Mode: Not deleting provision files\""
         end
 
+        # Check if k3s should be kept or removed, if the /var/lib/k3s/k3s-keep is in place
+        # then k3s is not removed, otherwise the directory is removed such as for setup.
+        k3s_keep = "[ ! -f \"/var/lib/rancher/k3s-keep\" ] && rm -rf /var/lib/rancher/k3s; touch /var/lib/rancher/k3s-keep"
 
-        cfg.vm.provision "copy-k3os-config", type: "shell", inline: "if ! cmp -s /home/rancher/provision-k3os-config.yaml /var/lib/rancher/k3os/config.yaml; then sudo cp /home/rancher/provision-k3os-config.yaml /var/lib/rancher/k3os/config.yaml && " + provision_remove + " && echo \"k3os configuration updated, rebooting\" && reboot; else " + provision_remove + "; fi", upload_path: "/home/rancher/provision-copy-k3os-config.sh"
+        cfg.vm.provision "copy-k3os-config", type: "shell", inline: "if ! cmp -s /home/rancher/provision-k3os-config.yaml /var/lib/rancher/k3os/config.yaml; then sudo cp /home/rancher/provision-k3os-config.yaml /var/lib/rancher/k3os/config.yaml && " + provision_remove + " && " + k3s_keep + " && " + "echo \"k3os configuration updated, rebooting\" && reboot; else " + provision_remove + "; fi", upload_path: "/home/rancher/provision-copy-k3os-config.sh"
 
       end
     end
