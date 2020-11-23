@@ -88,7 +88,6 @@ If provision_debug is set to true in the .vagrantuser then the provision scripts
 ## Notes
 
  - The Virtualbox guest additions are not installed
- - When deploying a multi server architecture there may be an additional master node which is not set as ready, this is because the instance name changes but still exists. Remove by running kubectl delete node $nodename
 
 ## References
 

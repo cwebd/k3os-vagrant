@@ -11,6 +11,7 @@ servers:
     k3os_config: 'config.yaml'
     k3os_config_env:
       hostname:  "k3s-server-01.cluster.k3s"
+      write_files:
       k3os_password: "rancher"
       k3os_token: "a6715b0fa4dca52833f2791e8ab1476f25ca0e137cd52ca13d40f33c4896a174"
       k3os_server_url: ""
@@ -25,6 +26,10 @@ servers:
         - "--flannel-iface=$k3os_args_flannel_iface"
         - "--flannel-backend=wireguard"
         - "--disable-agent=false"
+      init_cmd:
+      boot_cmd:
+      run_cmd:
+      - "/etc/init.d/crond start"
     cpus:  4
     memory:  1024
 

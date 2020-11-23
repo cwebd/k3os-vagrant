@@ -69,6 +69,7 @@ Vagrant.configure("2") do |config|
           vm.cpus = server_config[:cpus]
           vm.memory = server_config[:memory]
           vm.keymap = config.user.keymap
+          vm.storage :file, :size => '20G'
         end
 
         if bridge_interface != ""
@@ -119,10 +120,50 @@ Vagrant.configure("2") do |config|
         # If the k3os_config is not empty then write out the environment variables
         k3os_config_env = "#!/bin/bash\n"
         if server_config.has_key?(:k3os_config_env)
+
+          write_files = ""
+
           server_config.k3os_config_env.each do |arg, value|
-            k3os_config_env = k3os_config_env + "export " + arg.to_s + '=' + '"' + value.to_s + '"' + "\n"
+
+            # If the argument is write_files then handle the value
+            # so that this is accepted into yaml correctly
+
+            if arg.to_s == 'write_files'
+
+              # Retrieve the write_files config and convert to yaml
+              server_config.k3os_config_env[:"#{arg.to_s}"].each do |details|
+
+                if write_files == ""
+                  write_files = '['
+                end
+
+                write_files += '{'
+
+                details.each do |item, value|
+                  write_files += '"' + item.to_s + '"' + ':' + " '" + value.to_s + "', "
+                end
+
+                write_files += '},'
+
+              end
+
+              if write_files != ""
+                write_files = write_files + ']'
+              end
+
+              k3os_config_env = k3os_config_env + 'export write_files="' + write_files + '"' + "\n"
+
+            else
+
+              # Escape any double quotes
+              value_escaped = value.to_s.gsub('"','\"')
+
+              k3os_config_env = k3os_config_env + "export " + arg.to_s + '=' + '"' + value_escaped + '"' + "\n"
+
+            end
           end
         end
+
         # Create the k3os-config.yaml file including any variables
         k3os_config_env = k3os_config_env + "\n" + "envsubst < provision-k3os-config-template.yaml > provision-k3os-config.yaml.tmp && mv provision-k3os-config.yaml.tmp provision-k3os-config.yaml"
 
