@@ -13,21 +13,21 @@
 - Add scripts for bridged networking for macvlan interface
 - Add go-envsubst binary
 
-## 1.0.5
+## v1.0.5
 - k3os v0.10.2
 
-## 1.0.4
+## v1.0.4
 - Add multi server configuration using .vagrantuser
 - K3os configuration provisioning
 
-## 1.0.1
+## v1.0.1
  - Update README
  - k3os v0.10.1-rc1-1-g4e7da23-amd64
  - Add libvrt provisioner
  - Move packer to a separate directory and bring in the configuration for a multi node configuration
  - Add vagrantfile.template to add configure_networks for Linux and nugrant
 
-## 1.0.0
+## v1.0.0
 
  - K3os 0.9.1
  - Increase boot wait to 20 seconds
