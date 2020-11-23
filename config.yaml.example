@@ -1,4 +1,8 @@
 hostname: "$hostname"
+write_files: $write_files
+init_cmd: $init_cmd
+boot_cmd: $boot_cmd
+run_cmd: $run_cmd
 k3os:
   data_sources:
   modules:
